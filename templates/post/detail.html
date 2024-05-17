@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ posts.title }}</title>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ posts.title }}</h1>
+        {% if posts.image %}
+            <img src="{{ posts.image.url }}" alt="{{ posts.title }}" class="post-image">
+        {% endif %}
+        <p>{{ posts.description }}</p>
+        <p>Дата создания: {{ posts.created_at|date:"d M Y H:i" }}</p>
+        <a href="{% url 'update' posts.id %}" class="button">Редактировать пост</a>
+        <a href="{% url 'delete' posts.id %}" class="button" >Удалить пост</a>
+        <a href="{% url 'index' %}" class="button">Назад к списку постов</a>
+    </div>
+</body>
+</html>
