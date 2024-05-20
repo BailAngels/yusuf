@@ -28,6 +28,7 @@ INSTALLED_APPS = [
 
     #APPS
     'apps.posts',
+    'apps.tags',
 ]
 
 

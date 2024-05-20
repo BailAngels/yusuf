@@ -1,5 +1,6 @@
 from django.db import models
 
+from apps.tags.models import Tag
 
 class Post(models.Model):
     title = models.CharField(
@@ -16,6 +17,11 @@ class Post(models.Model):
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Дата создания',
+    )
+    tag = models.ManyToManyField(
+        Tag,
+        related_name='tag',
+        verbose_name='тег'
     )
 
     

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Подтвердить удаление тега </h1>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Да, удалить</button>
+        </form>
+        <a href="{% url 'tag_detail' tag.id %}" class="button">Отмена</a>
+    </div>
+</body>
+</html>

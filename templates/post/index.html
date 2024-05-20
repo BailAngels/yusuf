@@ -9,6 +9,7 @@
     <div class="container">
         <h1>Список постов</h1>
         <a href="{% url 'create' %}" class="button">Создать новый пост</a>
+        <a href="{% url 'tag_index' %}" class="button">Теги</a>
         <div class="posts">
             {% for post in posts %}
                 <div class="post">

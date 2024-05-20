@@ -12,10 +12,19 @@
             <img src="{{ posts.image.url }}" alt="{{ posts.title }}" class="post-image">
         {% endif %}
         <p>{{ posts.description }}</p>
+        <p>Tags:
+            {% for tag in posts.tag.all %}
+                {{ tag.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
         <p>Дата создания: {{ posts.created_at|date:"d M Y H:i" }}</p>
         <a href="{% url 'update' posts.id %}" class="button">Редактировать пост</a>
-        <a href="{% url 'delete' posts.id %}" class="button" >Удалить пост</a>
-        <a href="{% url 'index' %}" class="button">Назад к списку постов</a>
+        <a href="{% url 'delete' posts.id %}" class="button" >Удалить пост</a> 
+        <div>
+            <a href="{%url 'index'%}">
+                <button>Назад к списку постов</button>
+            </a>
+        </div>
     </div>
 </body>
 </html>

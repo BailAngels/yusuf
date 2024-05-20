@@ -2,7 +2,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 
 from apps.posts.models import Post
-from apps.posts.forms import PostForm
+from apps.posts.forms import PostCreateForm, PostUpdateForm
 
 
 class PostListView(generic.ListView):
@@ -13,7 +13,7 @@ class PostListView(generic.ListView):
 
 class PostCreateView(generic.CreateView):
     model = Post
-    form_class = PostForm
+    form_class = PostCreateForm
     template_name = 'post/create.html'
     success_url = reverse_lazy('index')
 
@@ -26,7 +26,7 @@ class PostDetailView(generic.DetailView):
 
 class PostUpdateView(generic.UpdateView):
     model = Post
-    form_class = PostForm
+    form_class = PostUpdateForm
     template_name = 'post/update.html'
     success_url = reverse_lazy('detail')
 
