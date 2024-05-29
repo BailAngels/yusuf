@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comment Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .detail-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="detail-container">
+        <h1>Comment Detail</h1>
+        <div class="comment-text">{{ comment.text }}</div>
+        <div class="comment-date">Posted on: {{ comment.created_at }}</div>
+        <a href="{% url 'com_update' comment.id %}">Edit</a>
+        <form method="post" action="{% url 'com_delete' comment.id %}">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+</body>
+</html>

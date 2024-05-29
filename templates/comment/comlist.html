@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comments List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .comment-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .comment-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .comment-text {
+            margin-bottom: 5px;
+        }
+        .comment-date {
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="comment-container">
+        <h1>Comments</h1>
+        {% for comment in comms %}
+            <div class="comment-item">
+                <div class="comment-text">{{ comments.text }}</div>
+                <div class="comment-date">Posted on: {{ comments.created_at }}</div>
+                <a href="{% url 'com_detail' comments.id %}">View Details</a>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

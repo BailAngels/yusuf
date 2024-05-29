@@ -32,3 +32,21 @@ class Post(models.Model):
     class Meta:
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
+
+
+
+class PostLike(models.Model):
+    belek = models.ForeignKey(
+        Post, 
+        on_delete = models.CASCADE,
+        related_name='like',
+        verbose_name='Пост',
+    )
+    
+    def __str__(self):
+        return self.belek.title
+    
+    class Meta():
+
+        verbose_name = 'Лайк'
+        verbose_name_plural = 'Лайки'

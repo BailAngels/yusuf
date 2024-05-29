@@ -2,29 +2,91 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ posts.title }}</title>
+    <title>Post Detail</title>
+    <style>
+        /* CSS стили, которые вы уже имеете */
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>{{ posts.title }}</h1>
-        {% if posts.image %}
-            <img src="{{ posts.image.url }}" alt="{{ posts.title }}" class="post-image">
-        {% endif %}
-        <p>{{ posts.description }}</p>
-        <p>Tags:
-            {% for tag in posts.tag.all %}
-                {{ tag.name }}{% if not forloop.last %}, {% endif %}
-            {% endfor %}
-        </p>
-        <p>Дата создания: {{ posts.created_at|date:"d M Y H:i" }}</p>
-        <a href="{% url 'update' posts.id %}" class="button">Редактировать пост</a>
-        <a href="{% url 'delete' posts.id %}" class="button" >Удалить пост</a> 
-        <div>
-            <a href="{%url 'index'%}">
-                <button>Назад к списку постов</button>
-            </a>
+    <div class="post-container">
+        <img src="{{ posts.image.url }}" alt="Post image" class="post-image">
+        <div class="post-text">
+            {{ posts.text }}
         </div>
+        <div class="post-tags">
+            {% for tag in posts.tag.all %}
+                <span>{{ tag.name }}</span>
+            {% endfor %}
+        </div>
+        <div class="post-date">
+            Posted on: {{ posts.created_at }}
+        </div>
+
+        <!-- Кнопки для обновления и удаления поста -->
+        <div class="post-actions">
+            <a href="{% url 'update' posts.id %}">Edit Post</a>
+            <form method="post" action="{% url 'delete' posts.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Delete Post</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Форма для добавления комментариев -->
+    <div class="comment-form-container">
+        <h2>Add a Comment</h2>
+        <form method="post" action="{% url 'com_create' %}">
+            {% csrf_token %}
+            <input type="hidden" name="post" value="{{ posts.pk }}">
+            <textarea name="text" placeholder="Enter your comment here..." required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- Отображение комментариев -->
+    <div class="comments-container">
+        <h2>Comments</h2>
+        {% for comment in posts.comments.all %}
+            <div class="comment">
+                <p>{{ comment.text }}</p>
+                <p>Posted on: {{ comment.created_at }}</p>
+                <a href="{% url 'com_update' comment.id %}">Edit</a>
+                <form method="post" action="{% url 'com_delete' comment.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+
+                <!-- Форма для добавления ответов на комментарии -->
+                <div class="reply-form-container">
+                    <h3>Reply to Comment</h3>
+                    <form method="post" action="{% url 'com_create' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="parent_comment" value="{{ comment.pk }}">
+                        <textarea name="text" placeholder="Enter your reply here..." required></textarea>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+
+                <!-- Отображение ответов на комментарии -->
+                <div class="replies-container">
+                    {% for reply in comment.replies.all %}
+                        <div class="reply">
+                            <p>{{ reply.text }}</p>
+                            <p>Posted on: {{ reply.created_at }}</p>
+                            <a href="{% url 'com_update' reply.id %}">Edit</a>
+                            <form method="post" action="{% url 'com_delete' reply.id %}">
+                                {% csrf_token %}
+                                <button type="submit">Delete</button>
+                            </form>
+                        </div>
+                    {% empty %}
+                        <p>No replies yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% empty %}
+            <p>No comments yet.</p>
+        {% endfor %}
     </div>
 </body>
 </html>

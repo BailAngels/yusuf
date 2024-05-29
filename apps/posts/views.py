@@ -1,7 +1,7 @@
 from django.views import generic
 from django.urls import reverse_lazy
 
-from apps.posts.models import Post
+from apps.posts.models import Post, PostLike
 from apps.posts.forms import PostCreateForm, PostUpdateForm
 
 
@@ -40,5 +40,11 @@ class PostDeleteView(generic.DeleteView):
     success_url = reverse_lazy('index')
 
 
+class PostLikeView(generic.CreateView):
+    model = PostLike 
+    fields = []
 
-
+    def form_valid(self, form):
+        form.instance.belek = Post.objects.get(pk= self.kwargs['pk']) 
+        return super().form_valid(form)
+    
